@@ -61,29 +61,33 @@
             transform: scale(1.05);
         }
         
-        /* EFECTO CRISTAL EN LA CARTA */
+        /* EFECTO CRISTAL MÁS TRANSPARENTE */
         .carta {
             display: none;
-            /* Fondo semitransparente blanco */
-            background: rgba(255, 255, 255, 0.4); 
-            /* Desenfoque del fondo (blur) para que el texto sea legible */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            /* Borde sutil brillante */
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            /* Fondo muy transparente para que destaquen las flores atrás */
+            background: rgba(255, 255, 255, 0.15); 
+            /* Desenfoque ligero */
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             
             padding: 25px 25px 15px 25px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             font-family: 'Georgia', serif;
-            color: #2a2a2a; 
-            font-weight: 500;
+            color: #111; /* Texto oscuro */
+            font-weight: 600;
             position: relative;
             animation: aparecer 1s ease-out;
             max-height: 85vh;
             overflow-y: auto;
         }
         
+        /* Efecto para que el texto sea siempre legible pese al fondo transparente */
+        .texto-legible {
+            text-shadow: 0px 0px 5px rgba(255,255,255,0.9), 0px 0px 10px rgba(255,255,255,0.9);
+        }
+
         @keyframes aparecer {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -100,7 +104,7 @@
             transform: rotate(-2deg);
         }
         
-        /* Animación de Mariquitas */
+        /* Animación de Mariquitas y Flores (Más opacas para verse mejor de fondo) */
         .mariquita {
             width: 25px;
             height: 25px;
@@ -110,87 +114,99 @@
             background-image: radial-gradient(circle at 8px 8px, rgba(0,0,0,0.8) 2px, transparent 2px),
                               radial-gradient(circle at 17px 15px, rgba(0,0,0,0.8) 2px, transparent 2px),
                               radial-gradient(circle at 8px 18px, rgba(0,0,0,0.8) 2px, transparent 2px);
-            z-index: 1; 
-            opacity: 0.85; 
+            z-index: 1;
+            opacity: 0.95;
         }
-        /* Animación de Flores Pequeñas */
         .flor-flotante {
-            width: 40px; 
+            width: 40px;
             height: 40px;
             position: absolute;
-            z-index: 2; 
-            opacity: 0.9;
+            z-index: 2;
+            opacity: 0.95;
         }
         
-        /* Rutas de movimiento */
-        @keyframes mover-1 {
-            0% { transform: translate(-50vw, -50vh) rotate(0deg); }
-            100% { transform: translate(150vw, 150vh) rotate(720deg); }
+        /* Rutas de movimiento que las mantienen dentro o cerca de la pantalla */
+        @keyframes deambular-1 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(35vw, -20vh) rotate(120deg); }
+            66% { transform: translate(-10vw, 40vh) rotate(240deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
         }
-        @keyframes mover-2 {
-            0% { transform: translate(150vw, -50vh) rotate(0deg); }
-            100% { transform: translate(-50vw, 150vh) rotate(-720deg); }
+        @keyframes deambular-2 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-30vw, 30vh) rotate(-120deg); }
+            66% { transform: translate(25vw, -10vh) rotate(-240deg); }
+            100% { transform: translate(0, 0) rotate(-360deg); }
         }
-        @keyframes mover-3 {
-            0% { transform: translate(-50vw, 150vh) rotate(0deg); }
-            100% { transform: translate(150vw, -50vh) rotate(720deg); }
+        @keyframes deambular-3 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20vw, 40vh) rotate(90deg); }
+            50% { transform: translate(-20vw, -10vh) rotate(180deg); }
+            75% { transform: translate(40vw, 10vh) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
         }
-        @keyframes mover-4 {
-            0% { transform: translate(150vw, 150vh) rotate(0deg); }
-            100% { transform: translate(-50vw, -50vh) rotate(-720deg); }
-        }
-        @keyframes flotar-lento {
-             0% { transform: translate(0, 0) rotate(0deg); }
-             50% { transform: translate(30vw, 20vh) rotate(180deg); }
-             100% { transform: translate(-20vw, -30vh) rotate(360deg); }
+        @keyframes deambular-4 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-40vw, -20vh) rotate(-90deg); }
+            50% { transform: translate(10vw, 30vh) rotate(-180deg); }
+            75% { transform: translate(-20vw, 50vh) rotate(-270deg); }
+            100% { transform: translate(0, 0) rotate(-360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- FONDO DE ANIMACIONES -->
+    <!-- FONDO DE ANIMACIONES MASIVAS (NO DESAPARECEN) -->
     <div id="animaciones-fondo">
-        <!-- Mariquitas -->
-        <div class="mariquita" style="top: 15%; left: 10%; animation: mover-1 25s infinite linear;"></div>
-        <div class="mariquita" style="top: 70%; left: 80%; animation: mover-2 30s infinite linear; animation-delay: 2s;"></div>
-        <div class="mariquita" style="top: 30%; left: 70%; animation: mover-3 22s infinite linear; animation-delay: 5s;"></div>
-        <div class="mariquita" style="top: 80%; left: 20%; animation: mover-4 28s infinite linear; animation-delay: 1s;"></div>
-        <div class="mariquita" style="top: 40%; left: 15%; animation: flotar-lento 35s infinite linear alternate; animation-delay: 4s;"></div>
-        <div class="mariquita" style="top: 10%; left: 85%; animation: mover-1 26s infinite linear; animation-delay: 12s;"></div>
-        <div class="mariquita" style="top: 90%; left: 50%; animation: mover-2 24s infinite linear; animation-delay: 8s;"></div>
-        <div class="mariquita" style="top: 50%; left: 5%; animation: mover-3 29s infinite linear; animation-delay: 3s;"></div>
-        <div class="mariquita" style="top: 5%; left: 40%; animation: mover-4 31s infinite linear; animation-delay: 7s;"></div>
-        <div class="mariquita" style="top: 60%; left: 95%; animation: flotar-lento 40s infinite linear alternate-reverse;"></div>
+        <!-- 15 Mariquitas -->
+        <div class="mariquita" style="top: 10%; left: 15%; animation: deambular-1 20s infinite linear;"></div>
+        <div class="mariquita" style="top: 80%; left: 80%; animation: deambular-2 25s infinite linear; animation-delay: 2s;"></div>
+        <div class="mariquita" style="top: 40%; left: 60%; animation: deambular-3 18s infinite linear; animation-delay: 5s;"></div>
+        <div class="mariquita" style="top: 70%; left: 20%; animation: deambular-4 22s infinite linear; animation-delay: 1s;"></div>
+        <div class="mariquita" style="top: 50%; left: 10%; animation: deambular-1 28s infinite linear alternate; animation-delay: 4s;"></div>
+        <div class="mariquita" style="top: 15%; left: 85%; animation: deambular-2 24s infinite linear; animation-delay: 7s;"></div>
+        <div class="mariquita" style="top: 90%; left: 40%; animation: deambular-3 19s infinite linear; animation-delay: 3s;"></div>
+        <div class="mariquita" style="top: 5%; left: 45%; animation: deambular-4 27s infinite linear; animation-delay: 9s;"></div>
+        <div class="mariquita" style="top: 60%; left: 90%; animation: deambular-1 30s infinite linear alternate-reverse;"></div>
+        <div class="mariquita" style="top: 25%; left: 35%; animation: deambular-2 21s infinite linear; animation-delay: 6s;"></div>
+        <div class="mariquita" style="top: 85%; left: 10%; animation: deambular-3 26s infinite linear; animation-delay: 2s;"></div>
+        <div class="mariquita" style="top: 30%; left: 95%; animation: deambular-4 23s infinite linear; animation-delay: 8s;"></div>
+        <div class="mariquita" style="top: 50%; left: 75%; animation: deambular-1 17s infinite linear; animation-delay: 4s;"></div>
+        <div class="mariquita" style="top: 75%; left: 50%; animation: deambular-2 29s infinite linear; animation-delay: 1s;"></div>
+        <div class="mariquita" style="top: 20%; left: 55%; animation: deambular-3 25s infinite linear; animation-delay: 10s;"></div>
 
-        <!-- Flores pequeñas flotantes -->
-        <div class="flor-flotante" style="top: 50%; left: 20%; animation: flotar-lento 25s infinite linear alternate;">
+        <!-- 15 Flores pequeñas flotantes -->
+        <div class="flor-flotante" style="top: 40%; left: 25%; animation: deambular-3 22s infinite linear alternate;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 20%; left: 60%; animation: mover-3 28s infinite linear; animation-delay: 2s;">
+        <div class="flor-flotante" style="top: 15%; left: 70%; animation: deambular-4 28s infinite linear; animation-delay: 2s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 85%; left: 40%; animation: mover-1 30s infinite linear; animation-delay: 6s;">
+        <div class="flor-flotante" style="top: 85%; left: 30%; animation: deambular-1 30s infinite linear; animation-delay: 5s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 75%; left: 85%; animation: mover-4 26s infinite linear; animation-delay: 4s;">
+        <div class="flor-flotante" style="top: 65%; left: 85%; animation: deambular-2 26s infinite linear; animation-delay: 4s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 15%; left: 30%; animation: mover-2 22s infinite linear; animation-delay: 3s;">
+        <div class="flor-flotante" style="top: 10%; left: 20%; animation: deambular-3 24s infinite linear; animation-delay: 3s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 40%; left: 80%; animation: flotar-lento 32s infinite linear alternate-reverse; animation-delay: 1s;">
+        <div class="flor-flotante" style="top: 45%; left: 85%; animation: deambular-4 32s infinite linear alternate-reverse; animation-delay: 1s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 80%; left: 10%; animation: mover-3 27s infinite linear; animation-delay: 8s;">
+        <div class="flor-flotante" style="top: 80%; left: 10%; animation: deambular-1 27s infinite linear; animation-delay: 8s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 10%; left: 90%; animation: mover-4 25s infinite linear; animation-delay: 5s;">
+        <div class="flor-flotante" style="top: 25%; left: 90%; animation: deambular-2 21s infinite linear; animation-delay: 5s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 90%; left: 70%; animation: mover-1 31s infinite linear; animation-delay: 10s;">
+        <div class="flor-flotante" style="top: 90%; left: 60%; animation: deambular-3 29s infinite linear; animation-delay: 9s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
-        <div class="flor-flotante" style="top: 30%; left: 5%; animation: mover-2 29s infinite linear; animation-delay: 7s;">
+        <div class="flor-flotante" style="top: 35%; left: 5%; animation: deambular-4 23s infinite linear; animation-delay: 7s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 60%; left: 40%; animation: deambular-1 25s infinite linear; animation-delay: 4s;">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
         </div>
     </div>
@@ -242,22 +258,22 @@
             </svg>
         </div>
 
-        <h1 id="titulo">Feliz 21 de Septiembre muñequitaaa!! 🌻</h1>
+        <h1 id="titulo" class="texto-legible">Feliz 21 de Septiembre muñequitaaa!! 🌻</h1>
         <button id="btn-abrir" class="btn">Abrir Cartita :3 🐞</button>
         
         <div id="carta" class="carta">
-            <h2 style="color: #d4af37; margin-top: 0; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Mi querida Nicolle Amarish,</h2>
+            <h2 style="color: #d4af37; margin-top: 0; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(255,255,255,0.9);">Mi querida Nicolle Amarish,</h2>
             <!-- Imagen en carpeta img/ -->
             <img src="img/Gemini_Generated_Image_.jfif" class="polaroid-photo" alt="Amarish pequeña">
             
-            <div style="text-align: justify; font-size: 0.95em; line-height: 1.5; font-weight: 600;">
+            <div class="texto-legible" style="text-align: justify; font-size: 0.95em; line-height: 1.5;">
                 <p>Quise poner esta fotito porque me recuerda a esa niña interior que tienes: llena de luz, de ternura y con unos rulos hermosos. Como futura psicóloga sabes lo importante que es cuidarla, y sé que a veces el mundo y los problemas en casa pesan mucho sobre esa sensibilidad tuya.</p>
                 <p>Ese viaje a Trujillo buscando tu paz mental es un paso muy valiente para proteger la tranquilidad de esa niña. Sé que Dios está guiando este proceso y te dará la serenidad que necesitas en este octavo ciclo.</p>
-                <p>Hoy es 21 de septiembre, y como manda la tradición, aquí tienes tus flores amarillas y tus mariquitas acompañándote, que sé que te gustan mucho. Con ellas, te reafirmo mi promesa: <strong>te voy a esperar</strong>.</p>
+                <p>Hoy es 21 de septiembre, y como manda la tradición, aquí tienes tus flores amarillas y tus mariquitas acompañándote, que sé que te gustan mucho. Con ellas, te reafirmo mi promesa: <strong style="color: #d90429;">te voy a esperar</strong>.</p>
                 <p>Tú concéntrate en tus proyectos personales y en la universidad y en estar bien, que yo estaré avanzando también siempre bajo los planes de Dios. La distancia es solo por un ratito preciosa.</p>
             </div>
             
-            <p style="text-align: right; font-style: italic; color: #d90429; font-weight: 900; font-size: 1.1em; margin-bottom: 0; text-shadow: 1px 1px 2px rgba(255,255,255,0.9);">Te quiero muchooooooooo!!,<br> Con mucho amor, besos y abrazos, Pedro</p>
+            <p style="text-align: right; font-style: italic; color: #d90429; font-weight: 900; font-size: 1.1em; margin-bottom: 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.9);">Te quiero muchooooooooo!!,<br> Con mucho amor, besos y abrazos, Pedro</p>
         </div>
     </div>
 
@@ -279,7 +295,15 @@
                     'autoplay': 0,
                     'controls': 0,
                     'loop': 1,
-                    'playlist': 'lOWf_LYn9_8' // Necesario para que el video se repita en loop
+                    'playlist': 'lOWf_LYn9_8' // Necesario para que el bucle funcione en YouTube Iframe API
+                },
+                events: {
+                    // Si por alguna razón el parámetro loop falla, esto asegura que se repita
+                    'onStateChange': function(event) {
+                        if (event.data === YT.PlayerState.ENDED) {
+                            player.playVideo(); 
+                        }
+                    }
                 }
             });
         }
@@ -291,6 +315,7 @@
             document.getElementById('titulo').style.display = 'none';
             document.getElementById('ramo').style.display = 'none';
             
+            // Inicia la música que se repetirá infinitamente
             if (player && typeof player.playVideo === 'function') {
                 player.playVideo();
             }
