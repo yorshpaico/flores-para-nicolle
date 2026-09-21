@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores para Amarish</title>
+    <style>
+        body {
+            background-color: #fff9e6;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            position: relative;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #d4af37;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background-color: #ffb703;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #fb8500;
+        }
+        .carta {
+            display: none;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            font-family: 'Cursive', 'Brush Script MT', cursive;
+            font-size: 1.2em;
+            color: #4a4a4a;
+            position: relative;
+            animation: aparecer 1s ease-out;
+        }
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .polaroid-photo {
+            width: 100%;
+            max-width: 250px;
+            border: 10px solid white;
+            border-bottom: 35px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-radius: 2px;
+            margin: 0 auto 20px auto;
+            display: block;
+            transform: rotate(-2deg);
+        }
+        /* Animación de Mariquitas */
+        .mariquita {
+            width: 25px;
+            height: 25px;
+            background-color: #d90429;
+            border-radius: 50%;
+            position: absolute;
+            background-image: radial-gradient(circle at 8px 8px, black 2px, transparent 2px),
+                              radial-gradient(circle at 17px 15px, black 2px, transparent 2px),
+                              radial-gradient(circle at 8px 18px, black 2px, transparent 2px);
+            animation: mover-mariquita 12s infinite linear;
+            z-index: 5;
+        }
+        @keyframes mover-mariquita {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(150px, 50px) rotate(45deg); }
+            50% { transform: translate(250px, -50px) rotate(90deg); }
+            75% { transform: translate(100px, -150px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        /* Flores Amarillas */
+        .flor {
+            position: absolute;
+            bottom: -20px;
+            width: 80px;
+            height: 80px;
+            background: #ffb703;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.6);
+            animation: balanceo 4s infinite ease-in-out alternate;
+            z-index: 1;
+        }
+        .flor::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 30px;
+            height: 30px;
+            background: #582f0e;
+            border-radius: 50%;
+        }
+        @keyframes balanceo {
+            from { transform: rotate(-8deg); }
+            to { transform: rotate(8deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decoración de flores -->
+    <div class="flor" style="left: 5%; animation-delay: 0s;"></div>
+    <div class="flor" style="left: 25%; animation-delay: 1s;"></div>
+    <div class="flor" style="left: 50%; animation-delay: 0.5s;"></div>
+    <div class="flor" style="left: 75%; animation-delay: 1.5s;"></div>
+    <div class="flor" style="left: 90%; animation-delay: 0.2s;"></div>
+
+    <!-- Mariquitas estilo Ladybug -->
+    <div class="mariquita" style="top: 15%; left: 10%;"></div>
+    <div class="mariquita" style="top: 70%; left: 80%; animation-delay: 3s;"></div>
+    <div class="mariquita" style="top: 30%; left: 70%; animation-delay: 6s;"></div>
+
+    <div class="container">
+        <h1 id="titulo">Feliz 21 de Septiembre 🌻</h1>
+        <button id="btn-abrir" class="btn">Abrir Sorpresa 🐞</button>
+        
+        <div id="carta" class="carta">
+            <!-- Imagen en carpeta img/ -->
+            <img src="img/Gemini_Generated_Image_.jfif" class="polaroid-photo" alt="Amarish pequeña">
+            <p>Hola mi querida Amarish,</p>
+            <p>A esa pequeña valiente de rulos lindos, quiero recordarle hoy que tiene un corazón de oro. Sé que fuiste a Trujillo a buscar tu paz, y quiero que sepas que acá estoy para apoyarte al 100%.</p>
+            <p>Aunque estemos lejitos, no quería dejar pasar esta fecha. Las mariquitas traen buena suerte, y tú eres la mía. Que Dios guíe tus pasos en este ciclo.</p>
+            <p>Te espero.<br><br>Con mucho cariño,<br>Pedro</p>
+        </div>
+    </div>
+
+    <!-- Reproductor oculto de YouTube (Adrienette Slow Dance) -->
+    <div id="player" style="display:none;"></div>
+    <script>
+        // Cargar la API de YouTube
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'lOWf_LYn9_8', 
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                }
+            });
+        }
+
+        // Acción del botón
+        document.getElementById('btn-abrir').addEventListener('click', function() {
+            document.getElementById('carta').style.display = 'block';
+            document.getElementById('btn-abrir').style.display = 'none';
+            document.getElementById('titulo').style.display = 'none';
+            
+            // Reproducir música
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
+        });
+    </script>
+</body>
+</html>
