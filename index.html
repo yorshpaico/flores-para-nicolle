@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flores para Amarish</title>
+    <title>Flores para mi Nicolle <3</title>
     <style>
         body {
             background-color: #fff9e6;
@@ -63,14 +63,15 @@
         .carta {
             display: none;
             background: #fff;
-            padding: 25px;
+            padding: 25px 25px 15px 25px;
             border-radius: 10px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             font-family: 'Georgia', serif;
-            font-size: 1.1em;
             color: #4a4a4a;
             position: relative;
             animation: aparecer 1s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         @keyframes aparecer {
             from { opacity: 0; transform: translateY(20px); }
@@ -78,7 +79,7 @@
         }
         .polaroid-photo {
             width: 100%;
-            max-width: 180px;
+            max-width: 160px;
             border: 10px solid white;
             border-bottom: 35px solid white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -148,7 +149,7 @@
                     <circle cx="0" cy="0" r="18" fill="#78350f"/>
                 </g>
 
-                <!-- Flor 3 (Centro Principal - Girasol detallado) -->
+                <!-- Flor 3 (Centro Principal) -->
                 <g transform="translate(100, 70) scale(0.85)">
                     <path d="M0 -15 L-15 -45 L0 -55 L15 -45 Z" fill="#fde047" transform="rotate(0)"/>
                     <path d="M0 -15 L-15 -45 L0 -55 L15 -45 Z" fill="#fde047" transform="rotate(45)"/>
@@ -168,20 +169,24 @@
         <button id="btn-abrir" class="btn">Abrir Sorpresa 🐞</button>
         
         <div id="carta" class="carta">
+            <h2 style="color: #d4af37; margin-top: 0; margin-bottom: 15px;">Mi querida Amarish,</h2>
             <!-- Imagen en carpeta img/ -->
             <img src="img/Gemini_Generated_Image_.jfif" class="polaroid-photo" alt="Amarish pequeña">
-            <p style="font-weight: bold; color: #d4af37; font-size: 1.2em;">Hola mi querida Amarish,</p>
-            <p>A esa pequeña valiente de rulos lindos, quiero recordarle hoy que tiene un corazón de oro. Sé que fuiste a Trujillo a buscar tu paz, y quiero que sepas que acá estoy para apoyarte al 100%.</p>
-            <p>Aunque estemos lejitos, no quería dejar pasar esta fecha. Las mariquitas traen buena suerte, y tú eres la mía. Que Dios guíe tus pasos en este ciclo.</p>
-            <p>Te espero.</p>
-            <p style="text-align: right; font-style: italic; color: #d90429;">Con mucho cariño,<br>Pedro</p>
+            
+            <div style="text-align: justify; font-size: 0.95em; line-height: 1.5;">
+                <p>Quise poner esta fotito porque me recuerda a esa niña interior que tienes: llena de luz, de ternura y con unos rulos hermosos. Como futura psicóloga sabes lo importante que es cuidarla, y sé que a veces el mundo y los problemas en casa pesan mucho sobre esa sensibilidad tuya.</p>
+                <p>Ese viaje a Trujillo buscando tu paz mental es un paso muy valiente para proteger la tranquilidad de esa niña. Sé que Dios está guiando este proceso y te dará la serenidad que necesitas en este octavo ciclo.</p>
+                <p>Hoy es 21 de septiembre, y como manda la tradición, aquí tienes tus flores amarillas y tus mariquitas acompañándote. Con ellas, te reafirmo mi promesa: <strong>te voy a esperar</strong>.</p>
+                <p>Tú concéntrate en tus prácticas y en estar bien, que yo estaré avanzando con mi tesis. La distancia es solo por un ratito.</p>
+            </div>
+            
+            <p style="text-align: right; font-style: italic; color: #d90429; font-weight: bold; font-size: 1.1em; margin-bottom: 0;">Te quiero mucho,<br>Pedro</p>
         </div>
     </div>
 
-    <!-- Reproductor oculto de YouTube (Adrienette Slow Dance) -->
+    <!-- Reproductor oculto de YouTube -->
     <div id="player" style="display:none;"></div>
     <script>
-        // Cargar la API de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -200,14 +205,12 @@
             });
         }
 
-        // Acción del botón
         document.getElementById('btn-abrir').addEventListener('click', function() {
             document.getElementById('carta').style.display = 'block';
             document.getElementById('btn-abrir').style.display = 'none';
             document.getElementById('titulo').style.display = 'none';
-            document.getElementById('ramo').style.display = 'none'; // Oculta el ramo para dar espacio a la carta
+            document.getElementById('ramo').style.display = 'none';
             
-            // Reproducir música
             if (player && typeof player.playVideo === 'function') {
                 player.playVideo();
             }
