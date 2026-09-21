@@ -60,19 +60,30 @@
             background-color: #fb8500;
             transform: scale(1.05);
         }
+        
+        /* EFECTO CRISTAL EN LA CARTA */
         .carta {
             display: none;
-            background: #fff;
+            /* Fondo semitransparente blanco */
+            background: rgba(255, 255, 255, 0.4); 
+            /* Desenfoque del fondo (blur) para que el texto sea legible */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            /* Borde sutil brillante */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            
             padding: 25px 25px 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             font-family: 'Georgia', serif;
-            color: #4a4a4a;
+            color: #2a2a2a; /* Letra un poco más oscura para contrastar */
+            font-weight: 500;
             position: relative;
             animation: aparecer 1s ease-out;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
+        
         @keyframes aparecer {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -80,8 +91,8 @@
         .polaroid-photo {
             width: 100%;
             max-width: 160px;
-            border: 10px solid white;
-            border-bottom: 35px solid white;
+            border: 8px solid rgba(255, 255, 255, 0.9);
+            border-bottom: 30px solid rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
             border-radius: 2px;
             margin: 0 auto 15px auto;
@@ -96,72 +107,92 @@
             background-color: #d90429;
             border-radius: 50%;
             position: absolute;
-            background-image: radial-gradient(circle at 8px 8px, black 2px, transparent 2px),
-                              radial-gradient(circle at 17px 15px, black 2px, transparent 2px),
-                              radial-gradient(circle at 8px 18px, black 2px, transparent 2px);
-            z-index: 5;
+            background-image: radial-gradient(circle at 8px 8px, rgba(0,0,0,0.8) 2px, transparent 2px),
+                              radial-gradient(circle at 17px 15px, rgba(0,0,0,0.8) 2px, transparent 2px),
+                              radial-gradient(circle at 8px 18px, rgba(0,0,0,0.8) 2px, transparent 2px);
+            z-index: 1; /* Z-index bajo para que pasen detrás de la carta */
+            opacity: 0.85; /* Un poco transparentes */
         }
         /* Animación de Flores Pequeñas */
         .flor-flotante {
-            width: 35px;
-            height: 35px;
+            width: 40px; /* Un poco más grandes */
+            height: 40px;
             position: absolute;
-            z-index: 4;
+            z-index: 2; /* Z-index bajo para que pasen detrás de la carta */
+            opacity: 0.9;
         }
         
-        /* Rutas de movimiento variadas */
+        /* Rutas de movimiento mucho más amplias para cruzar la pantalla */
         @keyframes mover-1 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(150px, 50px) rotate(45deg); }
-            50% { transform: translate(250px, -50px) rotate(90deg); }
-            75% { transform: translate(100px, -150px) rotate(180deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
+            0% { transform: translate(-50vw, -50vh) rotate(0deg); }
+            100% { transform: translate(150vw, 150vh) rotate(720deg); }
         }
         @keyframes mover-2 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-100px, 100px) rotate(-45deg); }
-            50% { transform: translate(-200px, 0px) rotate(-90deg); }
-            75% { transform: translate(-100px, -150px) rotate(-180deg); }
-            100% { transform: translate(0, 0) rotate(-360deg); }
+            0% { transform: translate(150vw, -50vh) rotate(0deg); }
+            100% { transform: translate(-50vw, 150vh) rotate(-720deg); }
         }
         @keyframes mover-3 {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(120px, -120px) rotate(120deg); }
-            66% { transform: translate(-80px, -80px) rotate(240deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
+            0% { transform: translate(-50vw, 150vh) rotate(0deg); }
+            100% { transform: translate(150vw, -50vh) rotate(720deg); }
+        }
+        @keyframes mover-4 {
+            0% { transform: translate(150vw, 150vh) rotate(0deg); }
+            100% { transform: translate(-50vw, -50vh) rotate(-720deg); }
+        }
+        @keyframes flotar-lento {
+             0% { transform: translate(0, 0) rotate(0deg); }
+             50% { transform: translate(30vw, 20vh) rotate(180deg); }
+             100% { transform: translate(-20vw, -30vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Mariquitas en movimiento (Múltiples) -->
-    <div class="mariquita" style="top: 15%; left: 10%; animation: mover-1 12s infinite linear;"></div>
-    <div class="mariquita" style="top: 70%; left: 80%; animation: mover-2 15s infinite linear; animation-delay: 2s;"></div>
-    <div class="mariquita" style="top: 30%; left: 70%; animation: mover-3 10s infinite linear; animation-delay: 4s;"></div>
-    <div class="mariquita" style="top: 80%; left: 20%; animation: mover-1 14s infinite linear; animation-delay: 1s;"></div>
-    <div class="mariquita" style="top: 40%; left: 15%; animation: mover-2 11s infinite linear; animation-delay: 5s;"></div>
-    <div class="mariquita" style="top: 10%; left: 85%; animation: mover-3 13s infinite linear; animation-delay: 3s;"></div>
+    <!-- FONDO DE ANIMACIONES (No se ocultan al abrir la carta) -->
+    <div id="animaciones-fondo">
+        <!-- Mariquitas en movimiento continuo (Aumentadas a 10) -->
+        <div class="mariquita" style="top: 15%; left: 10%; animation: mover-1 25s infinite linear;"></div>
+        <div class="mariquita" style="top: 70%; left: 80%; animation: mover-2 30s infinite linear; animation-delay: 2s;"></div>
+        <div class="mariquita" style="top: 30%; left: 70%; animation: mover-3 22s infinite linear; animation-delay: 5s;"></div>
+        <div class="mariquita" style="top: 80%; left: 20%; animation: mover-4 28s infinite linear; animation-delay: 1s;"></div>
+        <div class="mariquita" style="top: 40%; left: 15%; animation: flotar-lento 35s infinite linear alternate; animation-delay: 4s;"></div>
+        <div class="mariquita" style="top: 10%; left: 85%; animation: mover-1 26s infinite linear; animation-delay: 12s;"></div>
+        <div class="mariquita" style="top: 90%; left: 50%; animation: mover-2 24s infinite linear; animation-delay: 8s;"></div>
+        <div class="mariquita" style="top: 50%; left: 5%; animation: mover-3 29s infinite linear; animation-delay: 3s;"></div>
+        <div class="mariquita" style="top: 5%; left: 40%; animation: mover-4 31s infinite linear; animation-delay: 7s;"></div>
+        <div class="mariquita" style="top: 60%; left: 95%; animation: flotar-lento 40s infinite linear alternate-reverse;"></div>
 
-    <!-- Flores pequeñas flotantes (Múltiples) -->
-    <!-- Flor 1 -->
-    <div class="flor-flotante" style="top: 50%; left: 20%; animation: mover-2 14s infinite linear;">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
-    </div>
-    <!-- Flor 2 -->
-    <div class="flor-flotante" style="top: 20%; left: 60%; animation: mover-3 12s infinite linear; animation-delay: 2s;">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
-    </div>
-    <!-- Flor 3 -->
-    <div class="flor-flotante" style="top: 85%; left: 40%; animation: mover-1 16s infinite linear; animation-delay: 1s;">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
-    </div>
-    <!-- Flor 4 -->
-    <div class="flor-flotante" style="top: 75%; left: 85%; animation: mover-3 11s infinite linear; animation-delay: 4s;">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
-    </div>
-    <!-- Flor 5 -->
-    <div class="flor-flotante" style="top: 15%; left: 30%; animation: mover-2 13s infinite linear; animation-delay: 3s;">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        <!-- Flores pequeñas flotantes (Aumentadas a 10) -->
+        <div class="flor-flotante" style="top: 50%; left: 20%; animation: flotar-lento 25s infinite linear alternate;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 20%; left: 60%; animation: mover-3 28s infinite linear; animation-delay: 2s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 85%; left: 40%; animation: mover-1 30s infinite linear; animation-delay: 6s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 75%; left: 85%; animation: mover-4 26s infinite linear; animation-delay: 4s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 15%; left: 30%; animation: mover-2 22s infinite linear; animation-delay: 3s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 40%; left: 80%; animation: flotar-lento 32s infinite linear alternate-reverse; animation-delay: 1s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 80%; left: 10%; animation: mover-3 27s infinite linear; animation-delay: 8s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 10%; left: 90%; animation: mover-4 25s infinite linear; animation-delay: 5s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 90%; left: 70%; animation: mover-1 31s infinite linear; animation-delay: 10s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
+        <div class="flor-flotante" style="top: 30%; left: 5%; animation: mover-2 29s infinite linear; animation-delay: 7s;">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="20" r="15" fill="#fef08a"/><circle cx="50" cy="80" r="15" fill="#fef08a"/><circle cx="20" cy="50" r="15" fill="#fef08a"/><circle cx="80" cy="50" r="15" fill="#fef08a"/><circle cx="30" cy="30" r="15" fill="#fde047"/><circle cx="70" cy="70" r="15" fill="#fde047"/><circle cx="30" cy="70" r="15" fill="#fde047"/><circle cx="70" cy="30" r="15" fill="#fde047"/><circle cx="50" cy="50" r="18" fill="#78350f"/></svg>
+        </div>
     </div>
 
     <div class="container">
@@ -215,18 +246,18 @@
         <button id="btn-abrir" class="btn">Abrir Cartita :3 🐞</button>
         
         <div id="carta" class="carta">
-            <h2 style="color: #d4af37; margin-top: 0; margin-bottom: 15px;">Mi querida Nicolle Amarish,</h2>
+            <h2 style="color: #d4af37; margin-top: 0; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8);">Mi querida Nicolle Amarish,</h2>
             <!-- Imagen en carpeta img/ -->
             <img src="img/Gemini_Generated_Image_.jfif" class="polaroid-photo" alt="Amarish pequeña">
             
-            <div style="text-align: justify; font-size: 0.95em; line-height: 1.5;">
+            <div style="text-align: justify; font-size: 0.95em; line-height: 1.5; font-weight: 600;">
                 <p>Quise poner esta fotito porque me recuerda a esa niña interior que tienes: llena de luz, de ternura y con unos rulos hermosos. Como futura psicóloga sabes lo importante que es cuidarla, y sé que a veces el mundo y los problemas en casa pesan mucho sobre esa sensibilidad tuya.</p>
                 <p>Ese viaje a Trujillo buscando tu paz mental es un paso muy valiente para proteger la tranquilidad de esa niña. Sé que Dios está guiando este proceso y te dará la serenidad que necesitas en este octavo ciclo.</p>
                 <p>Hoy es 21 de septiembre, y como manda la tradición, aquí tienes tus flores amarillas y tus mariquitas acompañándote, que sé que te gustan mucho. Con ellas, te reafirmo mi promesa: <strong>te voy a esperar</strong>.</p>
                 <p>Tú concéntrate en tus proyectos personales y en la universidad y en estar bien, que yo estaré avanzando también siempre bajo los planes de Dios. La distancia es solo por un ratito preciosa.</p>
             </div>
             
-            <p style="text-align: right; font-style: italic; color: #d90429; font-weight: bold; font-size: 1.1em; margin-bottom: 0;">Te quiero muchooooooooo!!,<br> Con mucho amor, besos y abrazos, Pedro</p>
+            <p style="text-align: right; font-style: italic; color: #d90429; font-weight: 900; font-size: 1.1em; margin-bottom: 0; text-shadow: 1px 1px 2px rgba(255,255,255,0.9);">Te quiero muchooooooooo!!,<br> Con mucho amor, besos y abrazos, Pedro</p>
         </div>
     </div>
 
@@ -252,6 +283,7 @@
         }
 
         document.getElementById('btn-abrir').addEventListener('click', function() {
+            // Mostramos la carta y ocultamos el botón y el ramo principal
             document.getElementById('carta').style.display = 'block';
             document.getElementById('btn-abrir').style.display = 'none';
             document.getElementById('titulo').style.display = 'none';
