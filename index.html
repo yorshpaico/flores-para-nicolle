@@ -277,8 +277,12 @@
         </div>
     </div>
 
-    <!-- Reproductor oculto de YouTube -->
-    <div id="player" style="display:none;"></div>
+    <!-- Reproductor oculto 
+    <!-- Lo sacamos de la pantalla en vez de usar display:none -->
+    <div style="position: absolute; top: -9999px; left: -9999px;">
+        <div id="player"></div>
+    </div>
+
     <script>
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -288,17 +292,17 @@
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '0',
-                width: '0',
+                height: '1', // No puede ser 0 en iPhone
+                width: '1',  // No puede ser 0 en iPhone
                 videoId: 'lOWf_LYn9_8', 
                 playerVars: {
                     'autoplay': 0,
                     'controls': 0,
                     'loop': 1,
-                    'playlist': 'lOWf_LYn9_8' // Necesario para que el bucle funcione en YouTube Iframe API
+                    'playsinline': 1, // Crucial para iOS
+                    'playlist': 'lOWf_LYn9_8' 
                 },
                 events: {
-                    // Si por alguna razón el parámetro loop falla, esto asegura que se repita
                     'onStateChange': function(event) {
                         if (event.data === YT.PlayerState.ENDED) {
                             player.playVideo(); 
@@ -315,7 +319,7 @@
             document.getElementById('titulo').style.display = 'none';
             document.getElementById('ramo').style.display = 'none';
             
-            // Inicia la música que se repetirá infinitamente
+            // Musica infinta
             if (player && typeof player.playVideo === 'function') {
                 player.playVideo();
             }
